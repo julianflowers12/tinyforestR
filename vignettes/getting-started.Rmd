@@ -1,0 +1,21 @@
+---
+title: "Getting started with tinyforestR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tinyforestR)
+```
