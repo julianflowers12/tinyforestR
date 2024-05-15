@@ -1,0 +1,113 @@
+---
+title: "tinyforestR - getting started"
+---
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE, 
+  cache = FALSE, 
+  comment = "#>", 
+  fig.width = 8, 
+  fig.height = 6
+)
+
+install.packages("needs", repos = "http://CRAN.R-project.org")
+library(needs)
+library(tidyverse)
+library(sf)
+
+```
+
+## Getting started
+
+## What is the `tinyforestR` package?
+
+The aim of `tinyforestR` is to provide set of tools designed to extract, manipulate and analyse data relevant to the location of Tiny Forests in the UK.
+
+Specifically it extracts and processes landcover and biodiversity data from a range of sources for a given area around Tiny Forest locations, and provides a set of tools for analysing citizen science data derived directly from Tiny Forests.
+
+Tiny Forests are small scale dense native tree plantings usually in urban areas - and are managed by Earthwatch. <https://earthwatch.org.uk/get-involved/tiny-forest>
+
+The package is hosted on Github and is a work in progress. It can be installed by running `devtools::install_github("julianflowers12/tinyforestR")`. It loads another Github package `myScrapers` which is needed to download data from the Tiny Forest website.
+
+The package makes use of a number of Application Programming Interfaces (APIs) some of which require API keys which will need to be applied for separately. This is outlined in the relevant sections of this vignette.
+
+It uses a range of Python packages to access some datasets (in some cases Python packages are better developed than R). For this reason the first step is to run `initialise_tf()` to intialise the package.
+
+This:
+
+-   Loads the `reticulate` package which R uses to talk to Python
+
+-   Sets up a Python virtual environment (VE) called `tinyforest`, and ensures R uses the correct version of Python by specifying the `RETICULATE_PYTHON` environment variable. It may be necessary to restart R to make sure R correctly uses this.
+
+-   You will be asked if you want to remove the `tinyforest` environment. Say "no" unless you have a previous installation and are having trouble. It will create a clean install of the VE.
+
+-   Installs a number of Python packages to the `tinyforest` environment. These include
+
+    -   `earthengine-api` which enables access to Google Earth Engine (GEE)
+
+    -   `geemap` - a set of added value tools to extract and manipulate GEE data
+
+    -   `osdatahub` - access to Ordnance Survey National Geographic Database data.
+
+    -   `OSGridConverter` - converts lat-longs to UK Grid references
+    
+    -   `eemont` - calculates a range of vegetation indices from Sentinel2 satellite images
+
+-   Imports the relevant modules for use in other packages
+
+### Install and initialise
+
+First install and load the packages.
+
+```{r setup}
+
+if(!require("tinyforestR"))
+devtools::install_github("julianflowers12/tinyforestR", force = FALSE)
+devtools::install_github("julianflowers/myScrapers")
+needs(tinyforestR, sf, myScrapers, rvest)
+
+```
+
+Then initialise `tinyforestR`.
+
+```{r}
+initialise_tf()
+```
+
+## Load Tiny Forest data
+
+The next step is to load Tiny Forest (TF) data. Because this only exists in a series of web pages the `get_tf_data` function identifies the relevant pages and iterates over them to extract name, id, location, area, planters, and types of tree planted (as a list column), for those TFs planted at the time of extraction. It does include TFs planted outside the UK. The function takes about 120 seconds to iterate over all the relevant pages.
+
+`get_tf_data` does 4 things:
+
+-   extracts a data frame Tiny Forest names and IDs
+
+-   extracts a data frame of additional TF details (tree species, areas and locations)
+
+-   extracts and `sf` (spatial) data frame of UK data locations
+
+-   produces an interactive map of TF locations
+
+```{r}
+
+tf_data <- get_tf_data()
+
+```
+
+```{r}
+
+tf_data$tidy_tf |>
+    head()
+
+```
+
+```{r}
+
+tf_data$map
+
+```
+
