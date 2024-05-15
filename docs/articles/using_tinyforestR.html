@@ -50,6 +50,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/Planting_diversity_of_Tiny_Forests.html">Planting diversity of Tiny Forests</a>
+    </li>
+    <li>
       <a href="../articles/using_tinyforestR.html">tinyforestR - getting started</a>
     </li>
   </ul>
@@ -154,7 +157,7 @@ from Sentinel2 satellite images</p></li>
 <span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"tinyforestR"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"julianflowers12/tinyforestR"</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"julianflowers/myScrapers"</span><span class="op">)</span></span>
-<span><span class="fu">needs</span><span class="op">(</span><span class="va">tinyforestR</span>, <span class="va">sf</span>, <span class="va">myScrapers</span>, <span class="va">rvest</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/needs/man/needs.html" class="external-link">needs</a></span><span class="op">(</span><span class="va">tinyforestR</span>, <span class="va">sf</span>, <span class="va">myScrapers</span>, <span class="va">rvest</span><span class="op">)</span></span></code></pre></div>
 <p>Then initialise <code>tinyforestR</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/initialise_tf.html">initialise_tf</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -184,7 +187,7 @@ locations</p></li>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">tf_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_tf_data.html">get_tf_data</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 182.502 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 174.163 sec elapsed</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">tf_data</span><span class="op">$</span><span class="va">tidy_tf</span> <span class="op">|&gt;</span></span>
