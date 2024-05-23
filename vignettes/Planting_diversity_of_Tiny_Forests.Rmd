@@ -1,0 +1,68 @@
+---
+title: "Planting diversity of Tiny Forests"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Planting_diversity_of_Tiny_Forests}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(needs)
+needs(tinyforestR, sf, tidyverse, vegan)
+
+```
+
+## Read in TF data
+
+```{r}
+
+data("tf_data")
+
+```
+
+```{r}
+
+tf_data |>
+  count(year = year(plant_date)) |>
+  ggplot() +
+  geom_col(aes(year, n)) +
+  geom_label(aes(year, n, label = n)) +
+  labs(title = "TFs planted per year") +
+  theme_minimal() +
+  theme(plot.title.position = "plot")
+```
+
+## Tree diversity
+
+```{r}
+needs(patchwork)
+
+## annual planting
+
+tf_trees <- tf_data |>
+  mutate(trees_1 = str_split(trees, "\\|")) |>
+  select(-trees) |>
+  unnest("trees_1") |>
+  mutate(trees_1 = str_remove(trees_1, "\nExport Tags"))
+
+tf_trees |>
+  group_by(tf_id) |>
+  summarise(n = n()) |>
+  ggplot(aes(n)) +
+  geom_density(fill = "darkgreen") +
+  labs(title = "Distribution of tree species", 
+       x = "Number of tree species per TF") +
+  theme_minimal() +
+  theme(plot.title.position = "plot")
+
+```
+
+

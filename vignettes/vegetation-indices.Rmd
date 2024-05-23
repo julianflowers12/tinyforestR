@@ -1,0 +1,68 @@
+---
+title: "Calculating vegetation indices"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vegetation-indices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  warning = FALSE, 
+  message = FALSE
+)
+```
+
+```{r setup}
+library(tinyforestR)
+initialise_tf()
+```
+
+
+```{r}
+
+data("tf_data")
+
+```
+
+```{r}
+
+needs(cowplot)
+
+lon <- tf_data$lon[1]
+lat <- tf_data$lat[1]
+tf_id <- tf_data$tf_id[1]
+plant_date <- tf_data$plant_date[1]
+s1 <- plant_date - 365
+s2 <- plant_date + 365
+
+pre <- get_vegetation_indices(tf_id = tf_id, lon = lon, lat = lat, start = as.character(s1), end = as.character(plant_date), buffer = 50)
+
+post <- get_vegetation_indices(tf_id = tf_id, lon = lon, lat = lat, end = as.character(s2), start = as.character(plant_date), buffer = 50)
+
+cowplot::plot_grid(plot(pre$raster), plot(post$raster))
+
+```
+
+
+```{r}
+
+cbind(pre$sf, post$sf) |>
+  pivot_longer(names_to = "vi", values_to = "vals", cols = NDVI:NDBI.1) |>
+  mutate(period = ifelse(str_detect(vi, ".1"), "post", "pre"), 
+         vi = str_remove(vi, ".1")) |>
+  pivot_wider(names_from = period, values_from = vals) |>
+  mutate(change = post - pre) |>
+  ggplot() +
+  geom_boxplot(aes(vi, change)) +
+  geom_hline(yintercept = 0) +
+  coord_flip() +
+  labs(title = "Distribution of change in vegatation indices 1 year pre and post TF planting within 50m of TF point location") +
+  ggthemes::theme_clean() +
+  theme(plot.title.position = "plot")
+
+```
+

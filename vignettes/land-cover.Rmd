@@ -1,0 +1,223 @@
+---
+title: "Land cover and land use"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{land-cover}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: references.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  warning = FALSE, 
+  message = FALSE, 
+  cache = TRUE
+)
+```
+
+```{r setup, warning=FALSE, message=FALSE}
+library(tinyforestR)
+library(needs)
+
+```
+
+`tinyforestR` provides two different ways of getting land cover data.
+
+### Dynamic World
+
+The first uses Dynamic World data which is derived from Sentinel 2 satellite imagery from the EU Copernicus programme @brown2022. Dynamic World (DW) is 10m resolution near real time data with a 9 class land cover classification created by a machine learning algorithm. Although the resolution is too low to detect change at the level of a Tiny Forest, it can detect change in the surrounding area. There are 9 land cover classes:
+
+```{r, echo=FALSE}
+
+needs(rvest)
+
+url <- "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1"
+
+t <- read_html(url) |>
+    html_table() %>%
+    .[[2]] |>
+    knitr::kable()
+
+t
+
+```
+
+Extracting DW data requires a Google Earth Engine (GEE) account <https://developers.google.com/earth-engine/guides/getstarted>.
+
+First we need to run `initialise_tf`, and initialise GEE
+
+```{r}
+
+## initialise tf
+initialise_tf()
+
+ee <- import("ee")
+
+## initialise GEE
+ee$Initialize()
+ 
+```
+
+### Load TF data
+
+```{r}
+
+data("tf_data")
+
+```
+
+### Get DW data
+
+We'll extract DW data for a 100m buffer around the TF location 85 (=\> 100 pixels), for the year before and after planting.
+
+First we'll draw a 100m buffer around the TF point location
+
+```{r}
+needs(patchwork, stars, ggplot2, tidyterra, sf, alluvial, ggspatial)
+
+tf_buffer <- tf_data |>
+    slice(1) |>
+    st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+    st_transform(27700) |>
+    st_buffer(100) |>
+    st_transform(4326)
+
+tf_point <- tf_data |>
+    slice(1) |>
+    st_as_sf(coords = c("lon", "lat"), crs = 4326) 
+
+```
+
+Then extract DW landcover data via `get_dw_landcover` for a 100 x 100 m plot centred on the TF.
+
+```{r}
+
+lon <- tf_data$lon[1]
+lat <- tf_data$lat[1]
+tf_id <- tf_data$tf_id[1]
+plant_date <- tf_data$plant_date[1]
+s1 <- plant_date - 365
+s2 <- plant_date + 365
+
+
+pre <- get_dw_landcover(tf_id = tf_id, lat = lat, lon = lon, dist = 100, start_date = as.character(s1), end_date = as.character(plant_date))
+
+post <- get_dw_landcover(tf_id = tf_id, lat = lat, lon = lon, dist = 100, end_date = as.character(s2), start_date = as.character(plant_date))
+
+```
+
+### Simple change detection method
+
+```{r, fig.width=6}
+
+post_sf <- post$raster |> st_as_sf()
+pre_sf <- pre$raster |> st_as_sf()
+
+pre_sf |>
+    st_join(post_sf, join = st_contains) |>
+    rename(pre = 1, post = 2) |>
+    mutate(change = post - pre, 
+           change = factor(ifelse(change == 0, 0, 1))) |>
+    st_intersection(tf_buffer) |>
+    ggplot() +
+    geom_sf(aes(fill = change, colour = change)) +
+    geom_sf(data = tf_point, size = 3, colour = "darkgreen") +
+    scale_fill_manual(values = c("grey90", "red")) +
+    scale_colour_manual(values = c("grey90", "red")) +
+    theme_void()
+    
+
+```
+
+```{r echo=FALSE, fig.height=6, fig.width=8}
+
+remotes::install_github("corybrunson/ggalluvial", ref = "optimization") 
+
+needs(ggalluvial)
+
+changes <- pre_sf |>
+    st_join(post_sf, join = st_contains) |>
+    rename(pre = 1, post = 2) |>
+    mutate(change = post - pre, 
+           change = factor(ifelse(change == 0, 0, 1))) |>
+    count(pre, post, change)
+
+ggplot(data = changes,
+       aes(axis1 = pre, axis2 = post, 
+           y = n)) +
+  scale_x_discrete(limits = c("pre", "post"), expand = c(.2, .05)) +
+  xlab("") +
+  geom_alluvium(aes(fill = change)) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  theme_minimal() +
+  labs(title = "Reclassification pre and post planting", 
+       subtitle = "Much of the change between the two periods is due to reclassification of arable land to grassland, \nbut there is also reclassification from arable to tree cover (4 to 1)")
+
+```
+
+### Where is the change from grass to trees?
+
+We can map pixels where the land cover classification has changed from grass to trees - note this may be influenced by the quality of satellite imagery and the performance of the classification algorithm.
+
+```{r fig.height=6, fig.width=8, paged.print=TRUE}
+
+pre_sf |>
+    st_join(post_sf, join = st_contains) |>
+    rename(pre = 1, post = 2) |>
+    mutate(change = post - pre, 
+           change = factor(ifelse(change == 0, 0, 1))) |>
+    filter(change == 1, pre == 4, post == 1) |>
+  ggplot() +
+  ggspatial::annotation_map_tile() +
+  ggspatial::annotation_scale() +
+  geom_sf() +
+    ggspatial::annotation_north_arrow(location = "tr") +
+  ggtitle("Pixels reclassified from arable to tree cover") +
+  theme_void() +
+  theme(plot.title.position = "plot")
+  
+
+```
+
+## Ordnance survey data
+
+A second approach available via `tinyforestR` is to extract data from the National Geography Database (NGD) provided by Ordnance Survey. Unlike the DW raster data, this is vector data. The NGD was made available over the last couple of years and contains GIS information on all the detailed features used on OS maps. Unlike DW data this is ground-truthed by on the ground surveyors. It provides both land-use and land-cover classification - note these may not concur with other classification systems like CORINNE or CEH, altough as I write I see that OS have updated land-cover classifications to map to UK-BAP and EUNIS [^1].
+
+OS land-cover features include residential gardens, scrub areas, broad-leaf woodland. The fill feature list is shown
+
+To use this data, the first step is to set up an account for the OS Datahub, and subscribe to a premium account. (There is a free account, but the premium account is faster and there is £1000 per month free premium access). This will give an API key for the OS Datahub API <https://osdatahub.os.uk/docs/ofa/gettingStarted>.
+
+The key should be stored as an environment variable in an `.Renviron` file.
+
+```         
+needs(usethis)
+usethis::edit_r_environ()
+Sys.setenv(OSDATAHUB = "your key")
+```
+
+The main issue with using the NGD API is that is restricted to 100 features per call, so multiple calls may need to be made to download all the features for a given area. A related issue is that it is hard to guess in advance how many features might be included in your area of interest.
+
+```{r}
+
+key <- Sys.getenv("OSDATAHUB")
+
+## get OS data
+
+os_test <- os_ngd_api_call(tf_buffer, key = key, offset = 0)
+
+os_test$os_lc |>
+    st_transform(4326) |>
+    st_intersection(tf_buffer) |>
+mapview::mapview(zcol = "description") 
+
+```
+
+In this case 100 feature extraction is enough to cover our region of interest. Note that although the Tychwood TF is an OS map feature, it is not separately identified as woodland. Nevertheless, we can see that 100m is a mix of residential gardens (an important part of green infrastructure), deciduous tree cover and grassland. Interesting it doesn't include the wooded areas along the roads.
+
+## References
+
+[^1]: <https://eunis.eea.europa.eu/habitats.jsp>
