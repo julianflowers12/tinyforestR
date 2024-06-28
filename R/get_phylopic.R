@@ -11,7 +11,7 @@
 #' get_phylopic_image("Homo sapiens", "C:/images/")
 #' get_phylopic_image("Gorilla gorilla", "D:/pictures/")
 
-get_phylopic_images <- function(search, path){
+get_phylopic_image <- function(search, path){
 
   if(!require(rphylopic))install.packages("rphylopic")
   library(rphylopic)
