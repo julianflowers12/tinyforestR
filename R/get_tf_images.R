@@ -18,7 +18,7 @@
 
 
 
-get_tf_images <- function(lon, lat, key, zoom = 15, tf_id){
+get_tf_image <- function(lon, lat, key, zoom = 15, tf_id){
 
   Sys.setenv(GGMAP_GOOGLE_API_KEY = key)
   library(needs)
