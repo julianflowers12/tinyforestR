@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Julian", "Flowers", , "julian.flowers12@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "https://orcid.org/0000-0001-5262-4526?lang=en"))
-Description: tinyforestR is an R package which is designed to help extract landcover and diversity data from user-defined areas around Tiny Forest locations. It creates a Tiny Forest database by scraping the EarthWatch website, extracts biodiversity data from the NBN atlas, and provides functions for extracting information from satellite images and OS landcover datasets. It can be loaded by running devtools::install_github("julianflowers12/tiny-forest/tinyforestR").
+Description: tinyforestR is an R package which is designed to help extract landcover and diversity data from user-defined areas around Tiny Forest locations. It creates a Tiny Forest database by scraping the EarthWatch website, extracts biodiversity data from the NBN atlas, and provides functions for extracting information from satellite images and OS landcover datasets. It can be loaded by running devtools::install_github("julianflowers12/tinyforestR").
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
