@@ -42,7 +42,9 @@ s2 <- plant_date + 365
 pre <- get_vegetation_indices(tf_id = tf_id, lon = lon, lat = lat, start = as.character(s1), end = as.character(plant_date), buffer = 50)
 
 post <- get_vegetation_indices(tf_id = tf_id, lon = lon, lat = lat, end = as.character(s2), start = as.character(plant_date), buffer = 50)
+```
 
+```{r}
 cowplot::plot_grid(plot(pre$raster), plot(post$raster))
 
 ```
