@@ -108,22 +108,21 @@
 <span></span>
 <span><span class="va">pre</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_vegetation_indices.html">get_vegetation_indices</a></span><span class="op">(</span>tf_id <span class="op">=</span> <span class="va">tf_id</span>, lon <span class="op">=</span> <span class="va">lon</span>, lat <span class="op">=</span> <span class="va">lat</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">s1</span><span class="op">)</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">plant_date</span><span class="op">)</span>, buffer <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Generating URL ...</span></span>
-<span><span class="co">#&gt; Downloading data from https://earthengine.googleapis.com/v1/projects/earthengine-legacy/thumbnails/cb3b01a0ee46524a0d84853ff455e95e-330dd2d71b144b2b6dfadce4d1f2feaa:getPixels</span></span>
+<span><span class="co">#&gt; Downloading data from https://earthengine.googleapis.com/v1/projects/earthengine-legacy/thumbnails/793daf6fa19b89659a6c6e5982acac4d-c520b9f4a64ae766ec32be05e2ee7da0:getPixels</span></span>
 <span><span class="co">#&gt; Please wait ...</span></span>
-<span><span class="co">#&gt; Data downloaded to /var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/RtmpWmjYFg/s2.tif</span></span></code></pre></div>
+<span><span class="co">#&gt; Data downloaded to /var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/RtmpygFvpb/s2.tif</span></span></code></pre></div>
 <p><img src="vegetation-indices_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">post</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_vegetation_indices.html">get_vegetation_indices</a></span><span class="op">(</span>tf_id <span class="op">=</span> <span class="va">tf_id</span>, lon <span class="op">=</span> <span class="va">lon</span>, lat <span class="op">=</span> <span class="va">lat</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">s2</span><span class="op">)</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">plant_date</span><span class="op">)</span>, buffer <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Generating URL ...</span></span>
-<span><span class="co">#&gt; Downloading data from https://earthengine.googleapis.com/v1/projects/earthengine-legacy/thumbnails/2c5cfe528056ead8712a38b1d654fdd6-50268c3fda26d886451fca99d6db51cd:getPixels</span></span>
+<span><span class="co">#&gt; Downloading data from https://earthengine.googleapis.com/v1/projects/earthengine-legacy/thumbnails/2a0ce86753baead6e44040c61c2b34a6-204d79daaefad62f229d23b43b1592c9:getPixels</span></span>
 <span><span class="co">#&gt; Please wait ...</span></span>
-<span><span class="co">#&gt; Data downloaded to /var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/RtmpWmjYFg/s2.tif</span></span></code></pre></div>
+<span><span class="co">#&gt; Data downloaded to /var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/RtmpygFvpb/s2.tif</span></span></code></pre></div>
 <p><img src="vegetation-indices_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pre</span><span class="op">$</span><span class="va">raster</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">post</span><span class="op">$</span><span class="va">raster</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="vegetation-indices_files/figure-html/unnamed-chunk-3-3.png" width="700"><img src="vegetation-indices_files/figure-html/unnamed-chunk-3-4.png" width="700"><img src="vegetation-indices_files/figure-html/unnamed-chunk-3-5.png" width="700"></p>
+<code class="sourceCode R"><span><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pre</span><span class="op">$</span><span class="va">raster</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">post</span><span class="op">$</span><span class="va">raster</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="vegetation-indices_files/figure-html/unnamed-chunk-4-1.png" width="700"><img src="vegetation-indices_files/figure-html/unnamed-chunk-4-2.png" width="700"><img src="vegetation-indices_files/figure-html/unnamed-chunk-4-3.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">pre</span><span class="op">$</span><span class="va">sf</span>, <span class="va">post</span><span class="op">$</span><span class="va">sf</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -139,7 +138,7 @@
 <span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Distribution of change in vegatation indices 1 year pre and post TF planting within 50m of TF point location"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="http://jrnold.github.io/ggthemes/reference/theme_clean.html" class="external-link">theme_clean</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>plot.title.position <span class="op">=</span> <span class="st">"plot"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="vegetation-indices_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="vegetation-indices_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

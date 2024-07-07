@@ -1,0 +1,44 @@
+---
+title: "nsvakldskalkdsjf;laj"
+format: 
+    html:
+        toc: true
+        toc-location: right
+        fig-height: 12
+execute:
+    warning: false
+params:
+      tf: 60    
+
+---
+
+# TESTjklk
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tinyforestR)
+
+tf_data <- tf_data
+
+needs(sf, tidyverse)
+
+```
+
+
+```{r}
+#| label: fig-image
+#| fig-cap:  "Figure"
+#| 
+
+x <- params$tf
+i <- get_tf_images(lon = tf_data$lon[x], lat = tf_data$lat[x], zoom = 20, tf_id = 1, key = Sys.getenv("gmaps"))
+knitr::include_graphics(i[1])
+
+```
+
+
+```{r}
+
+```

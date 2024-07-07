@@ -70,10 +70,16 @@
     <loc>/reference/get_phylopic_image.html</loc>
   </url>
   <url>
+    <loc>/reference/get_phylopic_images.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_s2_landcover.html</loc>
   </url>
   <url>
     <loc>/reference/get_tf_data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_tf_image.html</loc>
   </url>
   <url>
     <loc>/reference/get_tf_images.html</loc>

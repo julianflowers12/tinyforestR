@@ -170,8 +170,9 @@ GEE</p>
 <span><span class="co">## initialise tf</span></span>
 <span><span class="fu"><a href="../reference/initialise_tf.html">initialise_tf</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; virtualenv: tinyforest</span></span>
-<span><span class="co">#&gt; Using virtual environment 'tinyforest' ...</span></span>
-<span></span>
+<span><span class="co">#&gt; Using virtual environment 'tinyforest' ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">ee</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"ee"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## initialise GEE</span></span>
@@ -181,7 +182,7 @@ GEE</p>
 <div class="section level3">
 <h3 id="load-tf-data">Load TF data<a class="anchor" aria-label="anchor" href="#load-tf-data"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"tf_data"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -191,7 +192,7 @@ GEE</p>
 <p>We’ll extract DW data for a 100m buffer around the TF location 85
 (=&gt; 100 pixels), for the year before and after planting.</p>
 <p>First we’ll draw a 100m buffer around the TF point location</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/needs/man/needs.html" class="external-link">needs</a></span><span class="op">(</span><span class="va">patchwork</span>, <span class="va">stars</span>, <span class="va">ggplot2</span>, <span class="va">tidyterra</span>, <span class="va">sf</span>, <span class="va">alluvial</span>, <span class="va">ggspatial</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">tf_buffer</span> <span class="op">&lt;-</span> <span class="va">tf_data</span> <span class="op">|&gt;</span></span>
@@ -206,7 +207,7 @@ GEE</p>
 <span>    <span class="fu">st_as_sf</span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> </span></code></pre></div>
 <p>Then extract DW landcover data via <code>get_dw_landcover</code> for
 a 100 x 100 m plot centred on the TF.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="va">tf_data</span><span class="op">$</span><span class="va">lon</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="va">tf_data</span><span class="op">$</span><span class="va">lat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
@@ -218,20 +219,21 @@ a 100 x 100 m plot centred on the TF.</p>
 <span></span>
 <span><span class="va">pre</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_dw_landcover.html">get_dw_landcover</a></span><span class="op">(</span>tf_id <span class="op">=</span> <span class="va">tf_id</span>, lat <span class="op">=</span> <span class="va">lat</span>, lon <span class="op">=</span> <span class="va">lon</span>, dist <span class="op">=</span> <span class="fl">100</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">s1</span><span class="op">)</span>, end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">plant_date</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Generating URL ...</span></span>
-<span><span class="co">#&gt; Downloading data from https://earthengine.googleapis.com/v1/projects/earthengine-legacy/thumbnails/4749c726a5b154b313b5b879e3eba369-f65657db061758845fd4ed5f4db23e49:getPixels</span></span>
+<span><span class="co">#&gt; Downloading data from https://earthengine.googleapis.com/v1/projects/earthengine-legacy/thumbnails/e065e32dbd9ed2f1bed82934b849a128-6fe098db3d1582f90abd09cda66468bf:getPixels</span></span>
 <span><span class="co">#&gt; Please wait ...</span></span>
-<span><span class="co">#&gt; Data downloaded to /var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/RtmpzeHu3X/dw.tif</span></span>
-<span></span>
+<span><span class="co">#&gt; Data downloaded to /var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/Rtmp7lvZN3/dw.tif</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">post</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_dw_landcover.html">get_dw_landcover</a></span><span class="op">(</span>tf_id <span class="op">=</span> <span class="va">tf_id</span>, lat <span class="op">=</span> <span class="va">lat</span>, lon <span class="op">=</span> <span class="va">lon</span>, dist <span class="op">=</span> <span class="fl">100</span>, end_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">s2</span><span class="op">)</span>, start_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">plant_date</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Generating URL ...</span></span>
-<span><span class="co">#&gt; Downloading data from https://earthengine.googleapis.com/v1/projects/earthengine-legacy/thumbnails/6cc4e1594337c5b7b46d14099d3d485b-c58c572a9fb48d24101ef12dcbc9b3d1:getPixels</span></span>
+<span><span class="co">#&gt; Downloading data from https://earthengine.googleapis.com/v1/projects/earthengine-legacy/thumbnails/5f07a18be213bcd6d579179fe324e47d-afccac438823a3977c74e3ebcfb4f479:getPixels</span></span>
 <span><span class="co">#&gt; Please wait ...</span></span>
-<span><span class="co">#&gt; Data downloaded to /var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/RtmpzeHu3X/dw.tif</span></span></code></pre></div>
+<span><span class="co">#&gt; Data downloaded to /var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/Rtmp7lvZN3/dw.tif</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="simple-change-detection-method">Simple change detection method<a class="anchor" aria-label="anchor" href="#simple-change-detection-method"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">post_sf</span> <span class="op">&lt;-</span> <span class="va">post</span><span class="op">$</span><span class="va">raster</span> <span class="op">|&gt;</span> <span class="fu">st_as_sf</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">pre_sf</span> <span class="op">&lt;-</span> <span class="va">pre</span><span class="op">$</span><span class="va">raster</span> <span class="op">|&gt;</span> <span class="fu">st_as_sf</span><span class="op">(</span><span class="op">)</span></span>
@@ -249,6 +251,15 @@ a 100 x 100 m plot centred on the TF.</p>
 <span>    <span class="fu">scale_colour_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"grey90"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">theme_void</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="land-cover_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; * checking for file ‘/private/var/folders/bk/jrqs03tx5mq9s28mhml5xzhm0000gn/T/Rtmp7lvZN3/remotesaadc533b6798/corybrunson-ggalluvial-5ead4ce/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">#&gt; * preparing ‘ggalluvial’:</span></span>
+<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
+<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
+<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
+<span><span class="co">#&gt; * looking to see if a ‘data/datalist’ file should be added</span></span>
+<span><span class="co">#&gt; * building ‘ggalluvial_0.10.0.tar.gz’</span></span></code></pre>
 <p><img src="land-cover_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
 </div>
 <div class="section level3">
@@ -258,7 +269,7 @@ a 100 x 100 m plot centred on the TF.</p>
 from grass to trees - note this may be influenced by the quality of
 satellite imagery and the performance of the classification
 algorithm.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">pre_sf</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">st_join</span><span class="op">(</span><span class="va">post_sf</span>, join <span class="op">=</span> <span class="va">st_contains</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -275,6 +286,7 @@ algorithm.</p>
 <span>  <span class="fu">theme_void</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>plot.title.position <span class="op">=</span> <span class="st">"plot"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="land-cover_files/figure-html/unnamed-chunk-9-1.png" width="768"></p>
+<pre><code><span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="ordnance-survey-data">Ordnance survey data<a class="anchor" aria-label="anchor" href="#ordnance-survey-data"></a>
@@ -305,7 +317,7 @@ features per call, so multiple calls may need to be made to download all
 the features for a given area. A related issue is that it is hard to
 guess in advance how many features might be included in your area of
 interest.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">key</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"OSDATAHUB"</span><span class="op">)</span></span>
 <span></span>
