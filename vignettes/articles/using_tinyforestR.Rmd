@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   fig.height = 6
 )
 
-install.packages("needs", repos = "http://CRAN.R-project.org")
+if(!require("needs"))install.packages("needs", repos = "http://CRAN.R-project.org")
 library(needs)
 library(tidyverse)
 library(sf)
@@ -74,7 +74,7 @@ needs(tinyforestR, sf, myScrapers, rvest)
 
 Then initialise `tinyforestR`.
 
-```{r}
+```{r initialise}
 initialise_tf()
 ```
 
@@ -92,20 +92,20 @@ The next step is to load Tiny Forest (TF) data. Because this only exists in a se
 
 -   produces an interactive map of TF locations
 
-```{r}
+```{r get data}
 
 tf_data <- get_tf_data()
 
 ```
 
-```{r}
+```{r tidy tf}
 
 tf_data$tidy_tf |>
     head()
 
 ```
 
-```{r}
+```{r plot map}
 
 tf_data$map
 
