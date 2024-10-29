@@ -72,7 +72,7 @@ First install and load the packages.
 
 if(!require("tinyforestR"))
 devtools::install_github("julianflowers12/tinyforestR", force = FALSE)
-devtools::install_github("julianflowers/myScrapers")
+devtools::install_github("julianflowers12/myScrapers")
 needs(tinyforestR, sf, myScrapers, rvest)
 
 ```

@@ -43,7 +43,7 @@ get_tf_data <- function(){
     needs(rvest, tidyverse, lubridate, tidyfast, data.table, devtools, sf, vegan, mapview, ggthemes, ggmap, tictoc)
 
     # Install package from GitHub
-    devtools::install_github('julianflowers/myScrapers', force = FALSE)
+    devtools::install_github('julianflowers12/myScrapers', force = FALSE)
 
     # Load package from GitHub
     library(myScrapers)

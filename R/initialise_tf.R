@@ -19,7 +19,7 @@ initialise_tf <- function(){
 
   require(reticulate); require(dplyr)
   library(needs)
-  needs(tidyverse)
+  needs(tidyverse, rgee, tidyrgee)
 
 
   ## create virtual envinronent called `tinyforest`

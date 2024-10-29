@@ -1,0 +1,43 @@
+---
+title: "TF"
+format: revealjs
+editor: visual
+---
+
+## Model variables
+
+```{mermaid}
+
+flowchart TD
+A[Predictors] --> C((Intrinsic))
+A --> B((Extrinsic))
+C --> D[[Forest age]]
+C --> E[[Mean forest height]]
+C --> Q[[Elevation]]
+C --> F[[Latitude]]
+C --> G[[Forest diversity]]
+B --> H[[Area biodiversity]]
+B --> I[[Connectivity]]
+B --> J[[Green infrastructure]]
+J --> M{{Open greenspace}}
+J --> N{{Residential gardens}}
+J --> P{{Water features}}
+J --> O{{Habitats}}
+B --> K[[Fragmentation]]
+B --> L[[Linear features]]
+
+```
+
+## Trees
+
+-   Use carbon capture, tagged trees
+
+```{r}
+#| label: heights and growth
+#|
+
+carbon_capture <- fread("/Users/julianflowers/thesis-final/data/cc.csv")
+
+
+
+```
